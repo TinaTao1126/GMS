@@ -1,0 +1,12 @@
+[ 2017-04-04T19:00:10+08:00 ] ::1 /onethink/index.php?s=/admin/store/edit/id/2.html
+ERR: Think\Model:detail方法不存在！
+
+[ 2017-04-04T19:04:41+08:00 ] ::1 /onethink/index.php?s=/admin/store/save.html
+ERR: Think\Model:update方法不存在！
+
+[ 2017-04-04T19:04:58+08:00 ] ::1 /onethink/index.php?s=/admin/store/save.html
+ERR: Think\Model:update方法不存在！
+
+[ 2017-04-04T19:09:26+08:00 ] ::1 /onethink/index.php?s=/admin/store/save.html
+ERR: Think\Model:update方法不存在！
+
