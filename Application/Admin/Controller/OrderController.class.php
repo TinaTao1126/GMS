@@ -11,11 +11,11 @@ namespace Admin\Controller;
 
 
 /**
- * 门店管理
+ * 订单管理
  * @author tina
  *
  */
-class StoreController extends AdminController {
+class OrderController extends AdminController {
 
     /**
      * 用户管理首页

@@ -11,11 +11,11 @@ namespace Admin\Controller;
 
 
 /**
- * 门店管理
+ * 汽车管理
  * @author tina
  *
  */
-class StoreController extends AdminController {
+class CarController extends AdminController {
 
     /**
      * 用户管理首页
@@ -126,7 +126,7 @@ class StoreController extends AdminController {
      * @author tina
      */
     public function save(){
-    	$res = D('Store')->update();
+    	$res = D('Car')->update();
     	if(!$res){
     		$this->error(D('Store')->getError());
     	}else{
@@ -177,39 +177,45 @@ class StoreController extends AdminController {
     	$this->display();
     }
     
+    /**
+     * 保存车辆信息
+     * 
+     * @author tina
+     */
     public function add(){
 
-    	if(IS_POST){
-    		$param = I('post.');
-    		$storename = $param['name'];
+    	save_base64_image();
+//     	if(IS_POST){
+//     		$param = I('post.');
+//     		$storename = $param['name'];
     		
-    		/** 判断参数*/
-    		if(empty($storename)) {
-    			$this->error("门店名称不能为空！");
-    		}
+//     		/** 判断参数*/
+//     		if(empty($storename)) {
+//     			$this->error("门店名称不能为空！");
+//     		}
     		
     
-    		/* 调用注册接口注册用户 */
-    		$Store = D('Store');
-    		$data = $Store->create();
-    		if($data){
-    			$id = $Store->add();
-    			if($id){
-    				// S('DB_CONFIG_DATA',null);
-    				//记录行为
-    				action_log('add_store', 'Store', $id, UID);
-    				$this->success('新增成功', Cookie('__forward__'));
-    			} else {
-    				$this->error('新增失败');
-    			}
-    		} else {
-    			$this->error($Store->getError());
-    		}
+//     		/* 调用注册接口注册用户 */
+//     		$Car = D('Car');
+//     		$data = $Car->create();
+//     		if($data){
+//     			$id = $Car->add();
+//     			if($id){
+//     				// S('DB_CONFIG_DATA',null);
+//     				//记录行为
+//     				action_log('add_store', 'Store', $id, UID);
+//     				$this->success('新增成功', Cookie('__forward__'));
+//     			} else {
+//     				$this->error('新增失败');
+//     			}
+//     		} else {
+//     			$this->error($Store->getError());
+//     		}
     		
-    	} else {
-    		$this->meta_title = '新增用户';
-    		$this->display();
-    	}
+//     	} else {
+//     		$this->meta_title = '开单';
+//     		$this->display();
+//     	}
     }
 
    

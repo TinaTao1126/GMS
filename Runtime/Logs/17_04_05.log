@@ -1,0 +1,6 @@
+[ 2017-04-05T20:23:57+08:00 ] ::1 /onethink/index.php?s=/admin/store_station/index.html
+ERR: 无法加载控制器:StoreStation
+
+[ 2017-04-05T22:11:54+08:00 ] ::1 /onethink/index.php?s=/admin/car/save.html
+ERR: Think\Model:update方法不存在！
+

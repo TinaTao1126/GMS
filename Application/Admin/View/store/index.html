@@ -16,9 +16,19 @@
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="nickname" class="search-input" value="{:I('districtId')}" placeholder="">
-				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
+				<select name="district_id" class="select">
+					<option value="100">大区</option>
+				</select>
+				<select name="city_id" class="select">
+					<option value="200">城市</option>
+				</select>
+				<select name="store_id" class="select">
+					<option value="300">门店</option>
+				</select>
+				
+				
 			</div>
+			<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 		</div>
     </div>
     <!-- 数据列表 -->
@@ -78,7 +88,7 @@
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+        var query  = $('.search-form').find('select').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){

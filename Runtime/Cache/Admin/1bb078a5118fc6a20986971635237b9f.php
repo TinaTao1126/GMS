@@ -85,78 +85,53 @@
             
 
             
-	<!-- 标题栏 -->
-	<div class="main-title">
-		<h2>门店列表</h2>
-	</div>
-	<div class="cf">
-		<div class="fl">
-            <a class="btn" href="<?php echo U('Store/add');?>">新 增</a>
-            <button class="btn ajax-post" url="<?php echo U('Store/changeStatus',array('method'=>'resumeStore'));?>" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="<?php echo U('Store/changeStatus',array('method'=>'forbidStore'));?>" target-form="ids">禁 用</button>
-            <button class="btn ajax-post confirm" url="<?php echo U('Store/changeStatus',array('method'=>'deleteStore'));?>" target-form="ids">删 除</button>
+    <div class="main-title">
+        <h2>新增门店</h2>
+    </div>
+    <form action="<?php echo U();?>" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">门店名称</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" value="">
+            </div>
         </div>
-
-        <!-- 高级搜索 -->
-		<div class="search-form fr cf">
-			<div class="sleft">
-				<select name="district_id" class="select">
-					<option value="100">大区</option>
-				</select>
-				<select name="city_id" class="select">
-					<option value="200">城市</option>
-				</select>
-				<select name="store_id" class="select">
-					<option value="300">门店</option>
-				</select>
-				
-				
-			</div>
-			<a class="sch-btn" href="javascript:;" id="search" url="<?php echo U('index');?>"><i class="btn-search"></i></a>
-		</div>
-    </div>
-    <!-- 数据列表 -->
-    <div class="data-table table-striped">
-	<table class="">
-    <thead>
-        <tr>
-		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-		<th class="">ID</th>
-		<th class="">门店名称</th>
-		<th class="">大区</th>
-		<th class="">城市</th>
-		<th class="">门店</th>
-		<th class="">创建时间</th>
-		<th class="">状态</th>
-		<th class="">操作</th>
-		</tr>
-    </thead>
-    <tbody>
-		<?php if(!empty($_list)): if(is_array($_list)): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo ($vo["id"]); ?>" /></td>
-            <td><?php echo ($vo["id"]); ?> </td>
-			<td><?php echo ($vo["name"]); ?> </td>
-			<td><?php echo ($vo["district_id"]); ?></td>
-			<td><?php echo ($vo["city_id"]); ?></td>
-			<td><?php echo ($vo["store_id"]); ?></td>
-			<td><span><?php echo (time_format($vo["createtime"])); ?></span></td>
-			<td><?php echo ($vo["status"]); ?></td>
-			<td><?php if(($vo["status"]) == "1"): ?><a href="<?php echo U('Store/changeStatus?method=disabled&id='.$vo['id']);?>" class="ajax-get">禁用</a>
-				<a title="编辑" href="<?php echo U('edit?id='.$vo['id']);?>">编辑</a>
-				<a class="confirm ajax-get" title="删除" href="<?php echo U('del?id='.$vo['id']);?>">删除</a>
-				<?php else: ?>
-				<a href="<?php echo U('Store/changeStatus?method=enabled&id='.$vo['id']);?>" class="ajax-get">启用</a><?php endif; ?>
-				
-                </td>
-		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
-		<?php else: ?>
-		<td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td><?php endif; ?>
-	</tbody>
-    </table>
-	</div>
-    <div class="page">
-        <?php echo ($_page); ?>
-    </div>
+        <div class="form-item">
+            <label class="item-label">门店地址</label>
+            <div class="controls">
+                <select class="select" name="district_id">
+                	<option value="100">华东</option>
+                </select>
+                <select class="select" name="city_id">
+                	<option value="200">北京</option>
+                </select>
+                <select class="select" name="store_id">
+                	 <option value="300">通州</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">联系人</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="contact" value="">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">联系人电话</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="contact_number" value="">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">备注</label>
+            <div class="controls">
+                <textarea class="textarea input-large" name="remark"></textarea>
+            </div>
+        </div>
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
 
         </div>
         <div class="cont-ft">
@@ -251,32 +226,10 @@
         }();
     </script>
     
-	<script src="/onethink/Public/static/thinkbox/jquery.thinkbox.js"></script>
-
-	<script type="text/javascript">
-	//搜索功能
-	$("#search").click(function(){
-		var url = $(this).attr('url');
-        var query  = $('.search-form').find('select').serialize();
-        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
-        query = query.replace(/^&/g,'');
-        if( url.indexOf('?')>0 ){
-            url += '&' + query;
-        }else{
-            url += '?' + query;
-        }
-		window.location.href = url;
-	});
-	//回车搜索
-	$(".search-input").keyup(function(e){
-		if(e.keyCode === 13){
-			$("#search").click();
-			return false;
-		}
-	});
-    //导航高亮
-    highlight_subnav('<?php echo U('Store/index');?>');
-	</script>
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('<?php echo U('Store/index');?>');
+    </script>
 
 </body>
 </html>

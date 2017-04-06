@@ -10,3 +10,12 @@ ERR: Think\Model:update方法不存在！
 [ 2017-04-04T19:09:26+08:00 ] ::1 /onethink/index.php?s=/admin/store/save.html
 ERR: Think\Model:update方法不存在！
 
+[ 2017-04-04T20:57:45+08:00 ] ::1 /onethink/index.php?s=/admin/member/index.html
+ERR: 无法加载控制器:Member
+
+[ 2017-04-04T21:03:54+08:00 ] ::1 /onethink/index.php?s=/admin/store_station/index.html
+ERR: 无法加载控制器:StoreStation
+
+[ 2017-04-04T21:09:13+08:00 ] ::1 /onethink/index.php?s=/admin/store_station/index.html
+ERR: 无法加载控制器:StoreStation
+
