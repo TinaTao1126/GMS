@@ -1,0 +1,115 @@
+-- MySQL Workbench Synchronization
+-- Generated: 2017-04-08 18:03
+-- Model: New Model
+-- Version: 1.0
+-- Project: Name of the project
+-- Author: weinan
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+ALTER SCHEMA `think`  DEFAULT COLLATE utf8_general_ci ;
+
+ALTER TABLE `think`.`think_custom` 
+COLLATE = utf8_general_ci ,
+CHANGE COLUMN `create_time` `create_time` TIMESTAMP NOT NULL ;
+
+CREATE TABLE IF NOT EXISTS `think`.`think_car_order` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `car_id` INT(11) NOT NULL,
+  `store_station_id` INT(11) NOT NULL,
+  `store_id` INT(11) NOT NULL,
+  `order_date` DATETIME NOT NULL COMMENT '进场日期',
+  `mileage` VARCHAR(45) NULL DEFAULT NULL COMMENT '进场日期的公里数',
+  `price` DECIMAL(11,2) NULL DEFAULT NULL COMMENT '合计金额',
+  `pay_status` VARCHAR(45) NULL DEFAULT NULL COMMENT '0未结算 1已结算',
+  `create_time` TIMESTAMP NOT NULL,
+  `pay_time` DATETIME NULL DEFAULT NULL COMMENT '结算时间',
+  PRIMARY KEY (`id`),
+  INDEX `fk_car_order_car1_idx` (`car_id` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `create_time_UNIQUE` (`create_time` ASC),
+  INDEX `fk_think_car_order_think_store_camera1_idx` (`store_station_id` ASC),
+  CONSTRAINT `fk_car_order_car1`
+    FOREIGN KEY (`car_id`)
+    REFERENCES `think`.`think_car` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_think_car_order_think_store_camera1`
+    FOREIGN KEY (`store_station_id`)
+    REFERENCES `think`.`think_store_station` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `think`.`think_car_order_items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `item_type` INT(3) NOT NULL COMMENT '维修项目 1维修 2保养 3美容 4检查',
+  `item_name` VARCHAR(45) NULL DEFAULT NULL COMMENT '项目描述例如：更换节气门、换胎',
+  `item_price` DECIMAL(11,2) NOT NULL DEFAULT 0 COMMENT '项目费用',
+  `car_order_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_car_order_items_car_order_idx` (`car_order_id` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_car_order_items_car_order`
+    FOREIGN KEY (`car_order_id`)
+    REFERENCES `think`.`think_car_order` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `think`.`think_car` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `car_number` VARCHAR(45) NOT NULL COMMENT '车牌号',
+  `model_type` VARCHAR(45) NULL DEFAULT NULL COMMENT '车型: 宝马',
+  `car_color` VARCHAR(45) NULL DEFAULT NULL COMMENT '颜色：红色',
+  `car_lit` VARCHAR(45) NULL DEFAULT NULL COMMENT '排量：2.0T',
+  `car_year` VARCHAR(45) NULL DEFAULT NULL COMMENT '年型：2015款',
+  `car_desc` VARCHAR(45) NULL DEFAULT NULL COMMENT '配置：520Li典雅款',
+  `car_vin` VARCHAR(45) NULL DEFAULT NULL COMMENT 'vin码',
+  `car_engine_num` VARCHAR(45) NULL DEFAULT NULL COMMENT '发送机号',
+  `remark` VARCHAR(45) NULL DEFAULT NULL COMMENT '备注',
+  `member_id` INT(11) NOT NULL,
+  `create_time` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_car_member1_idx` (`member_id` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  CONSTRAINT `fk_car_member1`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `think`.`think_custom` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `think`.`think_store_station` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '工位',
+  `name` VARCHAR(200) NOT NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '0禁用 1启用',
+  `store_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  INDEX `fk_think_store_camera_think_store1_idx` (`store_id` ASC),
+  CONSTRAINT `fk_think_store_camera_think_store1`
+    FOREIGN KEY (`store_id`)
+    REFERENCES `think`.`think_store` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+ALTER TABLE `think`.`think_store` 
+COLLATE = utf8_general_ci ,
+CHANGE COLUMN `address` `district_id` INT(11) NOT NULL COMMENT '大区id' ,
+CHANGE COLUMN `contact` `contact` VARCHAR(45) NULL DEFAULT NULL COMMENT '联系人' ,
+ADD COLUMN `city_id` INT(11) NOT NULL COMMENT '城市id' AFTER `district_id`,
+ADD COLUMN `store_id` INT(11) NOT NULL COMMENT '门店id' AFTER `city_id`;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
